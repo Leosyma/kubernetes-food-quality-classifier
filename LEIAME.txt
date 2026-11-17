@@ -1,0 +1,111 @@
+# Projeto 5 - Projeto de Otimização e Escalabilidade Para Pipeline de CI/CD com Kubernetes
+
+
+************ Estes Passos Abaixo São Opcionais, Apenas Para Teste Local ************
+
+
+# Abra o terminal ou prompt de comando, navegue até a pasta com os arquivos e execute o comando abaixo para criar um ambiente virtual:
+
+conda create --name pipep5 python=3.12
+
+# Ative o ambiente:
+
+conda activate pipep5 (ou: source activate pipep5)
+
+# Instale o pip e as dependências:
+
+conda install pip
+pip install -r requirements.txt 
+
+# Execute o comando abaixo e acesse pelo navegador:
+
+streamlit run appdsa.py
+
+# Use os comandos abaixo para desativar o ambiente virtual e remover o ambiente (opcional):
+
+conda deactivate
+conda remove --name pipep5 --all
+
+
+************ Aqui Começa a Execução do Projeto 5 ************
+
+
+# Instale o Docker Desktop.
+
+# ATENÇÃO: Abra a janela do Docker Desktop e mantenha aberta para inicializar o motor de execução Docker.
+
+# Instale o Kubectl na sua máquina host conforme instruções das aulas.
+
+# Valide a instalação checando a versão com o comando:
+kubectl version --client
+
+# Enquanto não visualizar a versão do kubectl não adianta seguir em frente. Primeiro instale o Kubectl na máquina host.
+
+# Instale o minikube na sua máquina host conforme instruções das aulas.
+
+# Verifica a versão do Minikube instalada
+minikube version
+
+# Inicia o cluster Kubernetes local com Minikube
+minikube start
+
+# Exibe informações sobre o cluster Kubernetes atual
+kubectl cluster-info
+
+# Cria a imagem Docker local da aplicação Streamlit
+docker build -t dsa-p5-app:v1 .
+
+# Carrega a imagem Docker local diretamente no ambiente Minikube
+minikube image load dsa-p5-app:v1
+
+# Aplica o manifesto YAML para criar o deployment Kubernetes
+kubectl apply -f k8s/deployment.yaml 
+
+# Aplica o manifesto YAML para criar o serviço Kubernetes
+kubectl apply -f k8s/service.yaml 
+
+# Lista os pods existentes no Kubernetes e seus status
+kubectl get pods
+
+# Lista os serviços ativos e mostra seus detalhes (porta, IP)
+kubectl get services
+
+# Abre automaticamente o serviço da aplicação no navegador usando Minikube
+minikube service dsa-p5-app-service
+
+# Escala o deployment para rodar com 4 réplicas (pods) simultaneamente
+kubectl scale deployment dsa-p5-app-deployment --replicas=4
+
+# Exibe o status atual dos pods após escalar a aplicação
+kubectl get pods
+
+# Deleta manualmente um pod específico para testar recuperação automática
+kubectl delete pod dsa-p5-app-deployment-f7979cffb-vdzjd
+
+# Lista novamente os pods; o Kubernetes recriará automaticamente o pod deletado
+kubectl get pods  
+
+# Exibe informações detalhadas sobre um pod específico
+kubectl describe pod dsa-p5-app-deployment-f7979cffb-znbqw
+
+# Abre um terminal interativo (bash) dentro de um pod específico
+kubectl exec -it dsa-p5-app-deployment-f7979cffb-mvrm6 -- bash
+
+# Atualize a app e recrie a imagem
+docker build -t dsa-p5-app:v2 .
+
+# Atualize a imagem no cluster Minikube:
+minikube image load dsa-p5-app:v2
+
+# Atualize seu Deployment YAML com a nova versão da imagem
+# Edite k8s/deployment.yaml e modifique esta linha:
+image: dsa-p5-app:v2
+
+# Aplique novamente o Deployment Kubernetes:
+kubectl apply -f k8s/deployment.yaml
+
+# Confirme se a atualização foi bem-sucedida:
+kubectl get pods
+
+
+
