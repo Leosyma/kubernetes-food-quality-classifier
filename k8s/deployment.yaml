@@ -7,7 +7,7 @@ kind: Deployment
 # Metadados do Deployment
 metadata:
   # Nome do Deployment
-  name: dsa-p5-app-deployment
+  name: food-quality-deployment
 
 # Especificação do Deployment
 spec:
@@ -18,21 +18,21 @@ spec:
   selector:
     matchLabels:
       # Rótulo usado para selecionar os pods
-      app: dsa-p5-app
+      app: food-quality
 
   # Modelo para criação dos pods
   template:
     metadata:
       labels:
         # Aplica o mesmo rótulo aos pods criados
-        app: dsa-p5-app
+        app: food-quality
 
     spec:
       # Lista de contêineres no pod
       containers:
-      - name: dsa-p5-app-container  # Nome do contêiner
-        #image: dsa-p5-app:v1        # Imagem do contêiner (versão v1)
-        image: dsa-p5-app:v2       # Imagem do contêiner (versão v2)
+      - name: food-quality-container  # Nome do contêiner
+        #image: food-quality:v1        # Imagem do contêiner (versão v1)
+        image: food-quality:v2       # Imagem do contêiner (versão v2)
         imagePullPolicy: Never      # Não tenta baixar a imagem do Docker Hub
         ports:
         - containerPort: 8501       # Porta exposta pelo contêiner

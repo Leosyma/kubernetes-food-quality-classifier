@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 # Execute o comando abaixo e acesse pelo navegador:
 
-streamlit run appdsa.py
+streamlit run app.py
 
 # Use os comandos abaixo para desativar o ambiente virtual e remover o ambiente (opcional):
 
@@ -53,10 +53,10 @@ minikube start
 kubectl cluster-info
 
 # Cria a imagem Docker local da aplicação Streamlit
-docker build -t dsa-p5-app:v1 .
+docker build -t food-quality:v1 .
 
 # Carrega a imagem Docker local diretamente no ambiente Minikube
-minikube image load dsa-p5-app:v1
+minikube image load food-quality:v1
 
 # Aplica o manifesto YAML para criar o deployment Kubernetes
 kubectl apply -f k8s/deployment.yaml 
@@ -71,35 +71,35 @@ kubectl get pods
 kubectl get services
 
 # Abre automaticamente o serviço da aplicação no navegador usando Minikube
-minikube service dsa-p5-app-service
+minikube service food-quality-service
 
 # Escala o deployment para rodar com 4 réplicas (pods) simultaneamente
-kubectl scale deployment dsa-p5-app-deployment --replicas=4
+kubectl scale deployment food-quality-deployment --replicas=4
 
 # Exibe o status atual dos pods após escalar a aplicação
 kubectl get pods
 
 # Deleta manualmente um pod específico para testar recuperação automática
-kubectl delete pod dsa-p5-app-deployment-f7979cffb-vdzjd
+kubectl delete pod food-quality-deployment-f7979cffb-vdzjd
 
 # Lista novamente os pods; o Kubernetes recriará automaticamente o pod deletado
 kubectl get pods  
 
 # Exibe informações detalhadas sobre um pod específico
-kubectl describe pod dsa-p5-app-deployment-f7979cffb-znbqw
+kubectl describe pod food-quality-deployment-f7979cffb-znbqw
 
 # Abre um terminal interativo (bash) dentro de um pod específico
-kubectl exec -it dsa-p5-app-deployment-f7979cffb-mvrm6 -- bash
+kubectl exec -it food-quality-deployment-f7979cffb-mvrm6 -- bash
 
 # Atualize a app e recrie a imagem
-docker build -t dsa-p5-app:v2 .
+docker build -t food-quality:v2 .
 
 # Atualize a imagem no cluster Minikube:
-minikube image load dsa-p5-app:v2
+minikube image load food-quality:v2
 
 # Atualize seu Deployment YAML com a nova versão da imagem
 # Edite k8s/deployment.yaml e modifique esta linha:
-image: dsa-p5-app:v2
+image: food-quality:v2
 
 # Aplique novamente o Deployment Kubernetes:
 kubectl apply -f k8s/deployment.yaml

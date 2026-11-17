@@ -5,7 +5,7 @@ Training generates measurements including weight, pH, humidity and cooking time.
 ## Run locally
 
 ```sh
-minikube image build -t dsa-p5-app:v2 .
+minikube image build -t food-quality:v2 .
 kubectl apply -f k8s/
-minikube service dsa-p5-app-service
+minikube service food-quality-service
 ```

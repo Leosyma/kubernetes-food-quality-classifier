@@ -7,7 +7,7 @@ kind: Service
 # Metadados do Service
 metadata:
   # Nome do Service
-  name: dsa-p5-app-service
+  name: food-quality-service
 
 # Especificação do Service
 spec:
@@ -17,7 +17,7 @@ spec:
   # Seleciona os pods aos quais este Service irá encaminhar o tráfego
   selector:
     # Deve corresponder ao rótulo dos pods do Deployment
-    app: dsa-p5-app
+    app: food-quality
 
   # Configuração das portas do Service
   ports:
